@@ -6,6 +6,12 @@
         xmlns:local="clr-namespace:NonePro" xmlns:models="clr-namespace:NonePro.Models"
         mc:Ignorable="d"
         Title="nonePro" Height="450" Width="800" Loaded="Window_Loaded">
+    <Window.Background>
+        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+            <GradientStop Color="Black" Offset="0"/>
+            <GradientStop Color="#FF1B87A6" Offset="1"/>
+        </LinearGradientBrush>
+    </Window.Background>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="20"></RowDefinition>
@@ -21,7 +27,7 @@
                  AcceptsReturn="True"
                  Grid.ColumnSpan="2" Grid.Row="1"
                  Name="TextBox"
-                 PreviewKeyDown="SaveButtonClick"/>
+                 PreviewKeyDown="SaveButtonClick" Background="White" Opacity="0.85" FontSize="14"/>
         <DataGrid x:Name="dgList" 
                   FontSize="12" 
                   FontWeight="Bold" 
@@ -30,7 +36,7 @@
                   Grid.Column="3" Grid.Row="1"
                   SelectedItem ="{Binding listItemSelected}"
                   PreviewKeyDown="DeleteKeyDown"
-                  SelectionChanged="dgList_SelectionChanged">
+                  SelectionChanged="dgList_SelectionChanged" Opacity="0.85">
             <DataGrid.Columns>
                 <DataGridTextColumn Binding="{Binding CreationTime}" 
                                     IsReadOnly="True" 
@@ -42,19 +48,19 @@
             </DataGrid.Columns>
         </DataGrid>
 
-        <Menu Margin="0,0,0,0" Grid.ColumnSpan="4">
+        <Menu Margin="0,0,0,0" Grid.ColumnSpan="4" Background="Black">
             <Menu.Items>
-                <MenuItem Header="File" DataContext="{Binding File}">
+                <MenuItem Header="File" DataContext="{Binding File}" Foreground="#FF87E8FF">
                     <MenuItem Header="New" Command="{Binding NewCommand}"/>
                     <MenuItem Header="Open" Command="{Binding OpenCommand}"/>
                     <MenuItem Header="Save" Command="{Binding SaveCommand}"/>
                     <MenuItem Header="Save as..." Command="{Binding SaveAsCommand}"/>
                 </MenuItem>
-                <MenuItem Header="Format" DataContext="{Binding Editor}">
+                <MenuItem Header="Format" DataContext="{Binding Editor}" Foreground="#FF87E8FF">
                     <MenuItem Header="Format" Command="{Binding FormatCommand}"/>
                     <MenuItem Header="Word wrap" Command="{Binding WrapCommand}" IsChecked="{Binding Format.isWrapped}"/>
                 </MenuItem>
-                <MenuItem  Header="Save" Click="SaveButtonClick"/>
+                <MenuItem  Header="Save" Click="SaveButtonClick" Foreground="#FF87E8FF"/>
             </Menu.Items>
         </Menu>
         <Label Content="TextSaved!" 

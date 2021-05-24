@@ -113,7 +113,6 @@ namespace WPFNotepad.DataBase
                 OpenConnection();
 
             string command = "UPDATE note_data SET header = @H WHERE user_id = @I AND note_id = @N AND list_id = @L";
-            var sqlAdapter = new MySqlDataAdapter();
             
             var updateComm = new MySqlCommand(command, connection);
             updateComm.Parameters.Add("@H", MySqlDbType.VarChar).Value = inputModel.Header;
@@ -121,7 +120,6 @@ namespace WPFNotepad.DataBase
             updateComm.Parameters.Add("@N", MySqlDbType.Int32).Value = inputModel.NoteID;
             updateComm.Parameters.Add("@L", MySqlDbType.Int32).Value = 1;
 
-            sqlAdapter.SelectCommand = updateComm;
             updateComm.ExecuteNonQuery();
         }
 
@@ -131,32 +129,28 @@ namespace WPFNotepad.DataBase
                 OpenConnection();
 
             string command = "DELETE FROM note_data WHERE user_id = @I AND note_id = @N AND list_id = @L";
-            var sqlAdapter = new MySqlDataAdapter();
 
             var deleteComm = new MySqlCommand(command, connection);
             deleteComm.Parameters.Add("@I", MySqlDbType.Int32).Value = userID;
             deleteComm.Parameters.Add("@N", MySqlDbType.Int32).Value = inputModel.NoteID;
             deleteComm.Parameters.Add("@L", MySqlDbType.Int32).Value = 1;
 
-            sqlAdapter.SelectCommand = deleteComm;
             deleteComm.ExecuteNonQuery();
         }
 
-        static public void UpdateText(NoteModel inputModel, string text)
+        static public void UpdateText(int noteID, string text)
         {
             if (connection.State == ConnectionState.Closed)
                 OpenConnection();
 
             string command = "UPDATE note_data SET text = @text WHERE user_id = @I AND note_id = @N AND list_id = @L";
-            var sqlAdapter = new MySqlDataAdapter();
 
             var upTextComm = new MySqlCommand(command, connection);
             upTextComm.Parameters.Add("@text", MySqlDbType.VarString).Value = text;
             upTextComm.Parameters.Add("@I", MySqlDbType.Int32).Value = userID;
-            upTextComm.Parameters.Add("@N", MySqlDbType.Int32).Value = inputModel.NoteID;
+            upTextComm.Parameters.Add("@N", MySqlDbType.Int32).Value = noteID;
             upTextComm.Parameters.Add("@L", MySqlDbType.Int32).Value = 1;
 
-            sqlAdapter.SelectCommand = upTextComm;
             upTextComm.ExecuteNonQuery();
         }
     }
