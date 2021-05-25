@@ -58,13 +58,15 @@ namespace NonePro
 
         private void SaveButtonClick(object sender, KeyEventArgs e)
         {
-            if ((Keyboard.Modifiers & ModifierKeys.Control) == ModifierKeys.Control && e.Key == Key.S && noteList.Count > dgList.SelectedIndex)
+            if ((Keyboard.Modifiers & ModifierKeys.Control) == ModifierKeys.Control && e.Key == Key.S 
+                && noteList.Count > dgList.SelectedIndex
+                && CheckUser())
                 UpdateText(noteList[dgList.SelectedIndex].NoteID, TextBox.Text);
         }
 
         private void SaveButtonClick(object sender, RoutedEventArgs e)
         {
-            if (noteList.Count > dgList.SelectedIndex)
+            if (noteList.Count > dgList.SelectedIndex && CheckUser())
                 UpdateText(noteList[dgList.SelectedIndex].NoteID, TextBox.Text);
         }
 

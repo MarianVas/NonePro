@@ -40,6 +40,41 @@ namespace WPFNotepad.DataBase
                 return true;
             return false;
         }
+        
+        static public void CreateNewUser(string email, string pass)
+        {
+            if (connection.State == ConnectionState.Closed)
+                OpenConnection();
+
+            string command = "INSERT INTO user_data (user_mail, password) VALUES (@email, @pass)";
+            var insertComm = new MySqlCommand(command, connection);
+            insertComm.Parameters.Add("@email", MySqlDbType.VarChar).Value = email;
+            insertComm.Parameters.Add("@pass", MySqlDbType.VarChar).Value = pass;
+            insertComm.ExecuteNonQuery();
+        }
+
+        static public bool CheckMail(string email)
+        {
+            if (connection.State == ConnectionState.Closed)
+                OpenConnection();
+
+            MySqlDataAdapter sqlAdapter = new MySqlDataAdapter();
+            DataTable table = new DataTable();
+            string command = "SELECT user_id FROM user_data WHERE user_mail = @Mail";
+            var selectComm = new MySqlCommand(command, connection);
+            selectComm.Parameters.Add("@Mail", MySqlDbType.VarChar).Value = email;
+
+            sqlAdapter.SelectCommand = selectComm;
+            sqlAdapter.Fill(table);
+
+            if (table.Rows.Count != 0)
+            {
+                userID = Convert.ToInt32(table.Rows[0].ItemArray[0]);
+                return true;
+            }
+            return false;
+
+        }
 
         static public bool VerificateUser(string email, string password)
         {
@@ -48,7 +83,8 @@ namespace WPFNotepad.DataBase
 
             MySqlDataAdapter sqlAdapter = new MySqlDataAdapter();
             DataTable table = new DataTable();
-            var validateComm = new MySqlCommand("SELECT user_id FROM user_data WHERE user_mail = @Mail AND password = @Pass", connection);
+            string command = "SELECT user_id FROM user_data WHERE user_mail = @Mail AND password = @Pass";
+            var validateComm = new MySqlCommand(command, connection);
             validateComm.Parameters.Add("@Mail", MySqlDbType.VarChar).Value = email;
             validateComm.Parameters.Add("@Pass", MySqlDbType.VarChar).Value = password;
 
