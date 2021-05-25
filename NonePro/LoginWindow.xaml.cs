@@ -44,7 +44,8 @@ namespace WPFNotepad
 
         private void Reg_Button_Click(object sender, RoutedEventArgs e)
         {
-
+            EnterForm enterForm = new EnterForm();
+            enterForm.Show();
         }
 
         private void MailTextBox_TextChanged(object sender, TextChangedEventArgs e)
